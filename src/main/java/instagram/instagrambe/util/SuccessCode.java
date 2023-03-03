@@ -13,7 +13,9 @@ public enum SuccessCode {
     BLOG_DELETE_SUCCESS(HttpStatus.OK,"게시글 삭제 성공"),
     COMMENT_DELETE_SUCCESS(HttpStatus.OK,"댓글 삭제 성공"),
     LIKE_SUCCESS(HttpStatus.OK, "좋아요 선택."),
-    NOT_LIKE_SUCCESS(HttpStatus.OK, "좋아요 취소.");
+    NOT_LIKE_SUCCESS(HttpStatus.OK, "좋아요 취소."),
+    COMMENT_POST_SUCCESS(HttpStatus.OK, "댓글 작성 완료")
+    ;
 
     private final HttpStatus httpStatus;
     private final String msg;
