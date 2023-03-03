@@ -7,10 +7,7 @@ import instagram.instagrambe.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -34,8 +31,20 @@ public class PostController {
 
     // 게시글 전체 조회
     @GetMapping
-    public ResponseEntity<List<PostResponseDto>> getBlogs(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<List<PostResponseDto>> getPosts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.getPosts(userDetails.getUser());
+    }
+
+    // 게시글 상세 조회
+    @GetMapping("/post_id")
+    public ResponseEntity<PostResponseDto> getPost(@PathVariable Long post_id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.getPost(post_id, userDetails.getUser());
+    }
+
+    // 선택한 게시글 수정
+    @PatchMapping("/{blogno}")
+    public ResponseEntity<PostResponseDto> updateBlog(@PathVariable Long blogno, @RequestBody PostRequestDto postrequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.updateBlog(blogno, postrequestDto, userDetails.getUser());
     }
 }
 
