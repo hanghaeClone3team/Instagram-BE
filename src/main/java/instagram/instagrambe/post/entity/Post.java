@@ -1,6 +1,7 @@
 package instagram.instagrambe.post.entity;
 
 import instagram.instagrambe.comment.entity.Comment;
+import instagram.instagrambe.common.Timestamped;
 import instagram.instagrambe.post.dto.PostRequestDto;
 import instagram.instagrambe.user.entity.User;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Post {
+public class Post extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
