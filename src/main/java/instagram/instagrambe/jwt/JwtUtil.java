@@ -1,6 +1,7 @@
 package instagram.instagrambe.jwt;
 
 import instagram.instagrambe.config.UserDetailsServiceImpl;
+import instagram.instagrambe.user.entity.UserRoleEnum;
 import instagram.instagrambe.util.CustomException;
 import instagram.instagrambe.util.ErrorCode;
 import io.jsonwebtoken.*;

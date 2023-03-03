@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import instagram.instagrambe.config.ExceptionHandlerFilter;
 import instagram.instagrambe.jwt.JwtAuthFilter;
 import instagram.instagrambe.jwt.JwtUtil;
+import instagram.instagrambe.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

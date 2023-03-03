@@ -1,5 +1,6 @@
 package instagram.instagrambe.config;
 
+import instagram.instagrambe.user.entity.User;
 import instagram.instagrambe.user.repository.UserRepository;
 import instagram.instagrambe.util.CustomException;
 import instagram.instagrambe.util.ErrorCode;

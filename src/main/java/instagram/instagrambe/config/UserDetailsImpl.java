@@ -1,6 +1,7 @@
 package instagram.instagrambe.config;
 
 import instagram.instagrambe.user.entity.User;
+import instagram.instagrambe.user.entity.UserRoleEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
