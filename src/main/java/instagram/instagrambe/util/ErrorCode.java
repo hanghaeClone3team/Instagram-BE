@@ -33,6 +33,13 @@ public enum ErrorCode {
     NOT_FOUND_DATA(NOT_FOUND,"해당 게시물을 찾을 수 없습니다."),
     NOT_FOUND_COMMENT(NOT_FOUND,"해당 댓글을 찾을 수 없습니다."),
 
+    /*404 NOT_FOUND : TOKEN Error*/
+    NOT_FOUND_TOKEN (HttpStatus.NOT_FOUND, "토큰을 찾을 수 없습니다."),
+    NOT_INVALID_JWT (HttpStatus.NOT_FOUND, "유효하지 않는 JWT 서명 입니다."),
+    EXPIRED_TOKEN (HttpStatus.NOT_FOUND, "만료된 JWT 토큰 입니다."),
+    UNSUPPORTED_TOKEN (HttpStatus.NOT_FOUND, "지원되지 않는 JWT 토큰 입니다."),
+    WRONG_TOKEN (HttpStatus.NOT_FOUND, "잘못된 JWT 토큰 입니다.."),
+    NO_AUTHORITY(HttpStatus.NOT_FOUND, "토큰을 찾을 수 없습니다."),
 
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌. 보통 중복된 데이터 존재 */
     DUPLICATE_RESOURCE(CONFLICT, "데이터가 이미 존재합니다"),

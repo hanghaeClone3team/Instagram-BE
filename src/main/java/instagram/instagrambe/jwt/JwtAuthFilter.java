@@ -1,6 +1,9 @@
 package instagram.instagrambe.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import instagram.instagrambe.dto.BaseResponseDto;
+import instagram.instagrambe.util.ErrorCode;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
