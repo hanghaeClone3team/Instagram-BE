@@ -21,10 +21,10 @@ public class PostLikeService {
     private final PostLikeRepository postLikeRepository;
     private final PostService postService;
 
-    public ResponseEntity<PostResponseDto> LikePost(Long post_id, User user) {
-        Post post = postRepository.findById(post_id).orElseThrow(
+    public ResponseEntity<PostResponseDto> LikePost(Long postId, User user) {
+        Post post = postRepository.findById(postId).orElseThrow(
                 () -> new CustomException(NOT_FOUND_DATA));
-        Long likeCheck = postLikeRepository.countByPost_IdAndUser_Id(post_id, user.getId());
+        Long likeCheck = postLikeRepository.countByPostIdAndUserId(postId, user.getId());
         boolean heart = false;
         if(likeCheck == 0){ //좋아용
             heart = true;
@@ -34,7 +34,7 @@ public class PostLikeService {
         }else if(likeCheck ==1) { //좋아요
             System.out.println("11111heart = " + likeCheck);
             postService.likePost(post, heart);
-            postLikeRepository.deleteByPost_IdAndUser_Id(post_id, user.getId());
+            postLikeRepository.deleteByPostIdAndUserId(postId, user.getId());
         }else {
             System.out.println("-----likeCheck = " + likeCheck);
             throw new CustomException(DUPLICATE_RESOURCE);

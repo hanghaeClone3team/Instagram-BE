@@ -24,7 +24,7 @@ public class Post extends Timestamped {
     private Long postlikes;
 
     @ManyToOne
-    @JoinColumn(name="user_no")
+    @JoinColumn(name="user_id")
     private User user;
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "blog")
