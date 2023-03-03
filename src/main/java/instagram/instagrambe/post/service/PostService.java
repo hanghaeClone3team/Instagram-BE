@@ -55,7 +55,7 @@ public class PostService {
 
         for (Post post : postList) {
             boolean heart = isHeart(user, post);
-            List<CommentResponseDto> commentResponseDtoList = getComments(post);
+            List<CommentResponseDto> commentResponseDtoList = getComment(post);
             postResponseDtoList.add(new PostResponseDto(post, commentResponseDtoList, heart));
         }
         return ResponseEntity.ok().body(postResponseDtoList);
@@ -66,7 +66,7 @@ public class PostService {
     public ResponseEntity<PostResponseDto> getPost(Long postId, User user) {
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new CustomException(NOT_FOUND_DATA));
-        List<CommentResponseDto> commentResponseDtoList = getComments(post);
+        List<CommentResponseDto> commentResponseDtoList = getComment(post);
         boolean heart = isHeart(user, post);
         PostResponseDto postResponseDto = new PostResponseDto(post, commentResponseDtoList, heart);
         return ResponseEntity.ok().body(postResponseDto);
@@ -108,7 +108,7 @@ public class PostService {
     // 게시글 하트 가져오기
     private boolean isHeart(User user, Post post) {
         boolean heart = false;
-        Long likeCheck = likeRepository.countByPost_IdAndUser_Id(post.getId(), user.getId());
+        Long likeCheck = likeRepository.countByPostIdAndUserId(post.getId(), user.getId());
         if (likeCheck != 0)
             heart = true;
         return heart;
