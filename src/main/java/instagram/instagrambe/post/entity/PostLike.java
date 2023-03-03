@@ -1,5 +1,6 @@
 package instagram.instagrambe.post.entity;
 
+import instagram.instagrambe.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,12 +18,12 @@ public class PostLike {
     @JoinColumn(name="post_id")
     private Post post;
 
-//    @ManyToOne
-//    @JoinColumn(name="user_no")
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name="user_no")
+    private User user;
 
-//    public Like(Post blog, User user) {
-//        this.post = blog;
-//        this.user = user;
-//    }
+    public PostLike(Post blog, User user) {
+        this.post = blog;
+        this.user = user;
+    }
 }
