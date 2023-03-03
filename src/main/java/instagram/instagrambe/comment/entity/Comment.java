@@ -38,6 +38,10 @@ public class Comment extends Timestamped {
     @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
+    // commentReply 연관관계
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
+    private List<CommentReply> commentReplies = new ArrayList<>();
+
     public Comment(User user, Post post, CommentResponseDto response) {
         this.comment = response.getComments();
         this.post = post;
