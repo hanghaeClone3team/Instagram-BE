@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findAllByBlogOrderByCreateAtDesc(Post post);
-    //void deleteAllByBlog(Post post);
+    List<Comment> findAllByPostOrderByCreateAtDesc(Post post);
+    void deleteAllByPost(Post post);
 }

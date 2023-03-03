@@ -37,8 +37,8 @@ public class PostService {
     public ResponseEntity<PostResponseDto> createPost(MultipartFile image,
                                                       PostRequestDto postRequestDto,
                                                       User user) throws IOException {
-//        System.out.println("postRepository.contents = " + postRepository.getContents());
-//        System.out.println("-------user = " + user.getUsername());
+//        System.out.println("postRepository.contents = " + postRepository.getContent());
+        System.out.println("-------user = " + user.getUsername());
         String storedFileName = s3Uploader.upload(image);//, "images"); //s3에 업로드하기
 
         postRequestDto.setImageUrl(storedFileName);
@@ -98,7 +98,7 @@ public class PostService {
     // 게시글에 있는 댓글 가져오기
     private List<CommentResponseDto> getComment(Post post) {
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
-        List<Comment> commentList = commentRepository.findAllByBlogOrderByCreateAtDesc(post);
+        List<Comment> commentList = commentRepository.findAllByPostOrderByCreateAtDesc(post);
         for (Comment c : commentList) {
             commentResponseDtoList.add(new CommentResponseDto()); //c));
         }
@@ -108,7 +108,7 @@ public class PostService {
     // 게시글 하트 가져오기
     private boolean isHeart(User user, Post post) {
         boolean heart = false;
-        Long likeCheck = likeRepository.countByPostIdAndUserId(post.getId(), user.getId());
+        Long likeCheck = likeRepository.countByPostIdAndUserId(post.getId(), user.getUserId());
         if (likeCheck != 0)
             heart = true;
         return heart;
