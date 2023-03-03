@@ -1,6 +1,9 @@
 package src.main.java.instagram.instagrambe.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import instagram.instagrambe.config.ExceptionHandlerFilter;
+import instagram.instagrambe.jwt.JwtAuthFilter;
+import instagram.instagrambe.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -55,7 +58,9 @@ public class WebSecurityConfig {
                 .antMatchers("/api/reply/**").permitAll()
                 .anyRequest().authenticated()
                 // JWT 인증/인가를 사용하기 위한 설정
-                .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class); //    private final JwtUtil jwtUtil; 추가하기!
+                .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)//    private final JwtUtil jwtUtil; 추가하기!
+                .addFilterBefore(new ExceptionHandlerFilter(), JwtAuthFilter.class);    // JwtAuthFilter 전에 예외 처리 필터 추가
+
         http.cors();
         // 로그인 사용
         http.formLogin().permitAll();// 로그인 페이지가 있을 경우 넣기!.loginPage(".api/user/login-page").permitAll();
