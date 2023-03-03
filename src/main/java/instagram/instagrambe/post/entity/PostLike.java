@@ -19,7 +19,7 @@ public class PostLike {
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name="user_no")
+    @JoinColumn(name="user_id")
     private User user;
 
     public PostLike(Post blog, User user) {

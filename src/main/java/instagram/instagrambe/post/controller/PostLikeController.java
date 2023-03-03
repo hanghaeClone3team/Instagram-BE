@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/content")
 public class PostLikeController {
    private final PostLikeService postLikeService;
-   @PostMapping("/{post_id}/like")
-   public ResponseEntity<PostResponseDto> likePost(@PathVariable Long post_id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-       return postLikeService.LikePost(post_id, userDetails.getUser());
+   @PostMapping("/{postId}/like")
+   public ResponseEntity<PostResponseDto> likePost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+       return postLikeService.LikePost(postId, userDetails.getUser());
    }
 }
 
