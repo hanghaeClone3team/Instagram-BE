@@ -41,7 +41,7 @@ public class Post extends Timestamped {
         this.postlikes = 0L;
     }
 
-    public void like(Long likes){
+    public void Likes(Long likes){
         this.postlikes = likes;
     }
 
