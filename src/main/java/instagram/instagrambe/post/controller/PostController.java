@@ -36,21 +36,22 @@ public class PostController {
     }
 
     // 게시글 상세 조회
-    @GetMapping("/{post_id}")
-    public ResponseEntity<PostResponseDto> getPost(@PathVariable Long post_id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.getPost(post_id, userDetails.getUser());
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostResponseDto> getPost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.getPost(postId, userDetails.getUser());
     }
 
     // 선택한 게시글 수정
-    @PatchMapping("/{post_id}")
-    public ResponseEntity<PostResponseDto> updateBlog(@PathVariable Long post_id, @RequestBody PostRequestDto postrequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.updateBlog(post_id, postrequestDto, userDetails.getUser());
+    @PatchMapping("/{postId}")
+    public ResponseEntity<PostResponseDto> updateBlog(@PathVariable Long postId, @RequestBody PostRequestDto postrequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.updateBlog(postId, postrequestDto, userDetails.getUser());
     }
 
     // 선택한 게시글 삭제
-    @DeleteMapping("/{post_id}")
-    public ResponseEntity<PostResponseDto> deleteBlog(@PathVariable Long post_id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.deleteBlog(post_id, userDetails.getUser());
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<PostResponseDto> deleteBlog(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.deleteBlog(postId, userDetails.getUser());
     }
+
 }
 

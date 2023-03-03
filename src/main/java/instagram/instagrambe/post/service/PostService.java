@@ -1,6 +1,7 @@
 package instagram.instagrambe.post.service;
 
 import instagram.instagrambe.comment.dto.CommentResponseDto;
+import instagram.instagrambe.comment.entity.Comment;
 import instagram.instagrambe.comment.repository.CommentRepository;
 import instagram.instagrambe.post.dto.PostRequestDto;
 import instagram.instagrambe.post.dto.PostResponseDto;
@@ -62,8 +63,8 @@ public class PostService {
 
     // 게시글 상세 조회 (선택한 게시글 조회)
     @Transactional
-    public ResponseEntity<PostResponseDto> getPost(Long post_id, User user) {
-        Post post = postRepository.findById(post_id).orElseThrow(
+    public ResponseEntity<PostResponseDto> getPost(Long postId, User user) {
+        Post post = postRepository.findById(postId).orElseThrow(
                 () -> new CustomException(NOT_FOUND_DATA));
         List<CommentResponseDto> commentResponseDtoList = getComments(post);
         boolean heart = isHeart(user, post);
@@ -73,8 +74,8 @@ public class PostService {
 
     // 게시글 수정 (선택한 게시글 수정)
     @Transactional
-    public ResponseEntity<PostResponseDto> updateBlog(Long post_id, PostRequestDto postRequestDto, User user) {
-        Post post = postRepository.findById(post_id).orElseThrow(
+    public ResponseEntity<PostResponseDto> updateBlog(Long postId, PostRequestDto postRequestDto, User user) {
+        Post post = postRepository.findById(postId).orElseThrow(
                 () -> new CustomException(NOT_FOUND_DATA));
 //        if(user.getRole() == USER) { //관리자 없다고 가정.
         if (user.getUsername().equals(post.getUser().getUsername()))
@@ -85,14 +86,39 @@ public class PostService {
 
     // 게시글 삭제 (선택한 게시글 삭제)
     @Transactional
-    public ResponseEntity deleteBlog(Long post_id, User user) {
-        Post post = postRepository.findById(post_id).orElseThrow(
+    public ResponseEntity deleteBlog(Long postId, User user) {
+        Post post = postRepository.findById(postId).orElseThrow(
                 () -> new CustomException(NOT_FOUND_DATA));
 //        if(user.getRole()==USER) { //관리자 없다고 가정.
         if (user.getUsername().equals(post.getUser().getUsername()))
-            postRepository.deleteById(post_id);
+            postRepository.deleteById(postId);
         else throw new CustomException(FORBIDDEN_DATA);
         return ResponseEntity.ok().body("게시글 삭제 성공");
+    }
+    // 게시글에 있는 댓글 가져오기
+    private List<CommentResponseDto> getComment(Post post) {
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        List<Comment> commentList = commentRepository.findAllByBlogOrderByCreateAtDesc(post);
+        for (Comment c : commentList) {
+            commentResponseDtoList.add(new CommentResponseDto()); //c));
+        }
+        return commentResponseDtoList;
+    }
+
+    // 게시글 하트 가져오기
+    private boolean isHeart(User user, Post post) {
+        boolean heart = false;
+        Long likeCheck = likeRepository.countByPost_IdAndUser_Id(post.getId(), user.getId());
+        if (likeCheck != 0)
+            heart = true;
+        return heart;
+    }
+
+    // 게시글 좋아요 누르기
+    public void likePost(Post post, boolean heart) {
+        Long likeNo = post.getPostlikes();
+        if (heart) post.Likes(likeNo + 1);
+        else post.Likes(likeNo - 1);
     }
 }
 
