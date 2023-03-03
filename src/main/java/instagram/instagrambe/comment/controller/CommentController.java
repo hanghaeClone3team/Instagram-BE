@@ -16,22 +16,26 @@ public class CommentController {
     private final CommentService commentService;
 
     // 댓글 작성
-    @PostMapping("/comment/{postId}")
+    @PostMapping("/comment/{id}")
     public BaseResponseDto createComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable(name = "postId") Long postId,
+            @PathVariable("id") Long postId,
             @RequestBody CommentResponseDto commentResponse
-            ){
+    ){
         return commentService.createComment(userDetails, postId, commentResponse);
     }
 
-    // 댓글 수정
-
-
     // 댓글 삭제
+    @DeleteMapping("/comment")
+    public BaseResponseDto deleteComment(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestParam("id") Long id,
+            @RequestParam("comment_id") Long commentId
+    ) {
+        return commentService.deleteComment(userDetails, commentId, id);
+    }
 
-
-    // 댓글 좋아요?
+    // 댓글 좋아요
 
 
 }
