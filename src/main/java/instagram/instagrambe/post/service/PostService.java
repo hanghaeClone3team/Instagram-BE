@@ -10,7 +10,6 @@ import instagram.instagrambe.post.repository.PostLikeRepository;
 import instagram.instagrambe.post.repository.PostRepository;
 import instagram.instagrambe.user.entity.User;
 import instagram.instagrambe.util.CustomException;
-import instagram.instagrambe.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -62,6 +61,7 @@ public class PostService {
     }
 
     // 게시글 상세 조회 (선택한 게시글 조회)
+    @Transactional
     public ResponseEntity<PostResponseDto> getPost(Long post_id, User user) {
         Post post = postRepository.findById(post_id).orElseThrow(
                 () -> new CustomException(NOT_FOUND_DATA));
@@ -70,16 +70,29 @@ public class PostService {
         PostResponseDto postResponseDto = new PostResponseDto(post, commentResponseDtoList, heart);
         return ResponseEntity.ok().body(postResponseDto);
     }
-    //선택한 게시글 수정
+
+    // 게시글 수정 (선택한 게시글 수정)
     @Transactional
-    public ResponseEntity<PostResponseDto> updateBlog(Long blogno, PostRequestDto postRequestDto, User user) {
-        Post post = postRepository.findById(blogno).orElseThrow(
+    public ResponseEntity<PostResponseDto> updateBlog(Long post_id, PostRequestDto postRequestDto, User user) {
+        Post post = postRepository.findById(post_id).orElseThrow(
                 () -> new CustomException(NOT_FOUND_DATA));
 //        if(user.getRole() == USER) { //관리자 없다고 가정.
         if (user.getUsername().equals(post.getUser().getUsername()))
             post.update(postRequestDto);
         else throw new CustomException(FORBIDDEN_DATA);
         return ResponseEntity.ok().body(PostResponseDto.of(post));
+    }
+
+    // 게시글 삭제 (선택한 게시글 삭제)
+    @Transactional
+    public ResponseEntity deleteBlog(Long post_id, User user) {
+        Post post = postRepository.findById(post_id).orElseThrow(
+                () -> new CustomException(NOT_FOUND_DATA));
+//        if(user.getRole()==USER) { //관리자 없다고 가정.
+        if (user.getUsername().equals(post.getUser().getUsername()))
+            postRepository.deleteById(post_id);
+        else throw new CustomException(FORBIDDEN_DATA);
+        return ResponseEntity.ok().body("게시글 삭제 성공");
     }
 }
 
