@@ -36,6 +36,12 @@ public class CommentController {
     }
 
     // 댓글 좋아요
-
+    @PostMapping("/comment/heart/{comment_id}")
+    public BaseResponseDto postCommentHeart(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable("comment_id") Long id
+    ) {
+        return commentService.postCommentHeart(userDetails, id);
+    }
 
 }

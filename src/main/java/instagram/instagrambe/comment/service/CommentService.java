@@ -2,6 +2,8 @@ package instagram.instagrambe.comment.service;
 
 import instagram.instagrambe.comment.dto.CommentResponseDto;
 import instagram.instagrambe.comment.entity.Comment;
+import instagram.instagrambe.comment.entity.CommentHeart;
+import instagram.instagrambe.comment.repository.CommentHeartRepository;
 import instagram.instagrambe.comment.repository.CommentRepository;
 import instagram.instagrambe.config.UserDetailsImpl;
 import instagram.instagrambe.dto.BaseResponseDto;
@@ -12,8 +14,11 @@ import instagram.instagrambe.util.CustomException;
 import instagram.instagrambe.util.ErrorCode;
 import instagram.instagrambe.util.SuccessCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final CommentHeartRepository commentHeartRepository;
     private final PostRepository postRepository;
 
     // 댓글 작성
@@ -45,6 +51,16 @@ public class CommentService {
         return BaseResponseDto.of(SuccessCode.COMMENT_DELETE_SUCCESS);
     }
 
+    // 댓글 좋아요
+    public BaseResponseDto postCommentHeart(UserDetailsImpl userDetails, Long id) {
+        Comment comment = getComment(id);
+        User user = userDetails.getUser();
+        // 댓글 좋아요
+        SuccessCode status = commentHeart(comment, user);
+        // 상태 반환
+        return BaseResponseDto.of(status);
+    }
+
     /* == 반복 로직 == */
 
     // post 유무 확인
@@ -63,7 +79,23 @@ public class CommentService {
         if(!comment.getPost().getId().equals(post.getId()))
             throw new CustomException(ErrorCode.NOT_FOUND_COMMENT);
         // comment 작성자와 요청자의 일치 여부 검사
-        if(!comment.getUser().getId().equals(userDetails.getUser().getId()))
+        if(!comment.getUser().getUserId().equals(userDetails.getUser().getUserId()))
             throw new CustomException(ErrorCode.UNAUTHORIZED_MEMBER);
+    }
+
+    // 좋아요 여부 확인
+    private SuccessCode commentHeart(Comment comment, User user) {
+        SuccessCode status = SuccessCode.NOT_LIKE_SUCCESS;
+        Optional<CommentHeart> result = commentHeartRepository
+                .findCommentHeartByComment_IdAndUser_UserId(comment.getId(), user.getUserId());
+        if (result.isEmpty()) {
+            status = SuccessCode.LIKE_SUCCESS;
+            CommentHeart commentHeart = new CommentHeart(comment, user);
+            commentHeartRepository.save(commentHeart);
+        } else {
+            CommentHeart commentHeart = result.get();
+            commentHeartRepository.delete(commentHeart);
+        }
+        return status;
     }
 }
