@@ -49,7 +49,7 @@ public class PostService {
 
         for (Post post : postList) {
             boolean heart = isHeart(user, post);
-            List<CommentResponseDto> commentResponseDtoList = getComment(post);
+            List<CommentResponseDto> commentResponseDtoList = getComments(post);
             postResponseDtoList.add(new PostResponseDto(post, commentResponseDtoList, heart));
         }
         return ResponseEntity.ok().body(postResponseDtoList);
