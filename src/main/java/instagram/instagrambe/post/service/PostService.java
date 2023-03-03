@@ -1,5 +1,6 @@
 package instagram.instagrambe.post.service;
 
+import instagram.instagrambe.comment.dto.CommentResponseDto;
 import instagram.instagrambe.comment.repository.CommentRepository;
 import instagram.instagrambe.post.dto.PostRequestDto;
 import instagram.instagrambe.post.dto.PostResponseDto;
@@ -11,9 +12,12 @@ import instagram.instagrambe.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,18 +28,31 @@ public class PostService {
     private final CommentRepository commentRepository;
 
     // 게시글 작성
+    @Transactional
     public ResponseEntity<PostResponseDto> createPost(MultipartFile image,
                                                       PostRequestDto postRequestDto,
                                                       User user) throws IOException {
-        System.out.println("postRepository.contents = " + postRepository.getContents());
-        System.out.println("-------user = " + user.getUsername());
-        String storedFileName = s3Uploader.upload(image, "images"); //s3에 업로드하기
+//        System.out.println("postRepository.contents = " + postRepository.getContents());
+//        System.out.println("-------user = " + user.getUsername());
+        String storedFileName = s3Uploader.upload(image);//, "images"); //s3에 업로드하기
 
         postRequestDto.setImageUrl(storedFileName);
 
         Post post = postRepository.saveAndFlush(new Post(postRequestDto, user));
         return ResponseEntity.ok().body(PostResponseDto.of(post));
+    }
 
+    //게시글 전체 조회
+    public ResponseEntity<List<PostResponseDto>> getPosts(User user) {
+        List<Post> postList = postRepository.findAllByOrderByModifiedAtDesc();
+        List<PostResponseDto> postResponseDtoList =new ArrayList<>();
+
+        for (Post post : postList) {
+            boolean heart = isHeart(user, post);
+            List<CommentResponseDto> commentResponseDtoList = getComment(post);
+            postResponseDtoList.add(new PostResponseDto(post, commentResponseDtoList, heart));
+        }
+        return ResponseEntity.ok().body(postResponseDtoList);
     }
 }
 
