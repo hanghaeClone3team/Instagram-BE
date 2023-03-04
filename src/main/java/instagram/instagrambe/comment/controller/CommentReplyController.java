@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/post/{id}/comment/{comment_id}")
 public class CommentReplyController {
 
     private final CommentReplyService commentReplyService;
 
     // 대댓글 작성
-    @PostMapping("/comment/reply/{comment_id}")
+    @PostMapping("/reply")
     public BaseResponseDto createCommentReply(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable("comment_id") Long commentId,
