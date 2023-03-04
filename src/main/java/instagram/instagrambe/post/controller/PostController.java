@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/content")
+@RequestMapping("/api/post")
 public class PostController {
     private final PostService postService;
 
