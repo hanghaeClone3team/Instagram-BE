@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/content")
+@RequestMapping("/api/post")
 public class PostController {
     private final PostService postService;
 
@@ -26,7 +26,7 @@ public class PostController {
                                                       @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
         System.out.println("-------image.getOriginalFilename() = " + image.getOriginalFilename());
         System.out.println("-------image.getContentType() = " + image.getContentType());
-        System.out.println("-------requestDtoContents = " + postRequestDto.getContents());
+        System.out.println("-------requestDtoContents = " + postRequestDto.getContent());
     return postService.createPost(image, postRequestDto, userDetails.getUser());
     }
 

@@ -8,6 +8,6 @@ import lombok.Setter;
 public class PostRequestDto {
 
     private String imageUrl;
-    private String contents;
+    private String content;
 
 }

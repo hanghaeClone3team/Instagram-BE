@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/post/{id}")
 public class CommentController {
 
     private final CommentService commentService;
 
     // 댓글 작성
-    @PostMapping("/comment/{id}")
+    @PostMapping("/comment")
     public BaseResponseDto createComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable("id") Long postId,
@@ -26,11 +26,11 @@ public class CommentController {
     }
 
     // 댓글 삭제
-    @DeleteMapping("/comment")
+    @DeleteMapping("/comment/{comment_id}")
     public BaseResponseDto deleteComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestParam("id") Long id,
-            @RequestParam("comment_id") Long commentId
+            @PathVariable("id") Long id,
+            @PathVariable("comment_id") Long commentId
     ) {
         return commentService.deleteComment(userDetails, commentId, id);
     }

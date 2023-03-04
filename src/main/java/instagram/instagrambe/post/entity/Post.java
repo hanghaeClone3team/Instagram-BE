@@ -35,7 +35,7 @@ public class Post extends Timestamped {
 
 
     public Post(PostRequestDto postRequestDto, User user) {
-        this.content = postRequestDto.getContents();
+        this.content = postRequestDto.getContent();
         this.user = user;
         this.imageUrl = postRequestDto.getImageUrl();
         this.postlikes = 0L;
@@ -46,6 +46,6 @@ public class Post extends Timestamped {
     }
 
     public void update(PostRequestDto postRequestDto) {
-        this.content = postRequestDto.getContents();
+        this.content = postRequestDto.getContent();
     }
 }
