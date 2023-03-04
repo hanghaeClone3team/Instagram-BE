@@ -89,10 +89,12 @@ public class CommentService {
         Optional<CommentHeart> result = commentHeartRepository
                 .findCommentHeartByComment_IdAndUser_UserId(comment.getId(), user.getUserId());
         if (result.isEmpty()) {
+            comment.addHeart();
             status = SuccessCode.LIKE_SUCCESS;
             CommentHeart commentHeart = new CommentHeart(comment, user);
             commentHeartRepository.save(commentHeart);
         } else {
+            comment.deleteHeart();
             CommentHeart commentHeart = result.get();
             commentHeartRepository.delete(commentHeart);
         }

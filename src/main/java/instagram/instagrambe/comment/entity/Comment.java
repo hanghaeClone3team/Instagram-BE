@@ -6,6 +6,7 @@ import instagram.instagrambe.post.entity.Post;
 import instagram.instagrambe.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ public class Comment extends Timestamped {
 
     @Column(nullable = false)
     private String comment;
+
+    @Column(name = "comment_likes")
+    Long commentLikes;
 
     // post 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
@@ -46,5 +50,14 @@ public class Comment extends Timestamped {
         this.comment = response.getComments();
         this.post = post;
         this.user = user;
+        this.commentLikes = 0L;
+    }
+
+    public void addHeart() {
+        this.commentLikes += 1L;
+    }
+
+    public void deleteHeart() {
+        this.commentLikes -= 1L;
     }
 }
