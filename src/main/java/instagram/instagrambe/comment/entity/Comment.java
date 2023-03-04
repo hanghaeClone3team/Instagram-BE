@@ -39,8 +39,8 @@ public class Comment extends Timestamped {
     private User user;
 
     // heart 연관관계
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
-    private List<Comment> comments = new ArrayList<>();
+//    @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
+//    private List<Comment> comments = new ArrayList<>();
 
     // commentReply 연관관계
     @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)

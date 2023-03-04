@@ -1,5 +1,6 @@
 package instagram.instagrambe.comment.entity;
 
+import instagram.instagrambe.common.Timestamped;
 import instagram.instagrambe.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class CommentReply {
+public class CommentReply extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
