@@ -2,6 +2,7 @@ package instagram.instagrambe.post.service;
 
 import instagram.instagrambe.comment.dto.CommentResponseDto;
 import instagram.instagrambe.comment.entity.Comment;
+import instagram.instagrambe.comment.repository.CommentHeartRepository;
 import instagram.instagrambe.comment.repository.CommentRepository;
 import instagram.instagrambe.post.dto.PostRequestDto;
 import instagram.instagrambe.post.dto.PostResponseDto;
@@ -29,16 +30,18 @@ import static instagram.instagrambe.util.ErrorCode.NOT_FOUND_DATA;
 public class PostService {
     private final PostRepository postRepository;
     private final S3Uploader s3Uploader;
-    private final PostLikeRepository likeRepository;
+    private final PostLikeRepository postLikeRepository;
     private final CommentRepository commentRepository;
+//    private final CommentLikeRespositoy commentLikeRespositoy;
+
 
     // 게시글 작성
     @Transactional
     public ResponseEntity<PostResponseDto> createPost(MultipartFile image,
                                                       PostRequestDto postRequestDto,
                                                       User user) throws IOException {
-//        System.out.println("postRepository.contents = " + postRepository.getContents());
-//        System.out.println("-------user = " + user.getUsername());
+//        System.out.println("postRepository.contents = " + postRepository.getContent());
+        System.out.println("-------user = " + user.getUsername());
         String storedFileName = s3Uploader.upload(image);//, "images"); //s3에 업로드하기
 
         postRequestDto.setImageUrl(storedFileName);
@@ -60,6 +63,23 @@ public class PostService {
         }
         return ResponseEntity.ok().body(postResponseDtoList);
     }
+//    @Transactional(readOnly = true)
+//    public ResponseEntity<List<PostResponseDto>> getPosts() {
+//        // 1) 객체선언하기!
+//        List<Post> postList = postRepository.findAllByOrderByModifiedAtDesc();
+//        List<PostResponseDto> postResponseList = new ArrayList<>();
+//        // 2) 각각의 게시글 마다 댓글들을 전부 가져오기
+//        for (Post post : postList) {
+//            List<CommentResponseDto> commentList = new ArrayList<>();
+//            for (Comment comment : post.getComments()) {
+//                commentList.add(CommentResponseDto.from(comment, commentLikeRespositoy.countCommentLikesByCommentId(comment.getId())));
+//                // 이너 클래스 고치기 제발좀 고치자 자고 일어나서 하자
+//            }
+//            postResponseList.add(PostResponseDto.from(post, commentList, postLikeRepository.countByPostIdAndUserId(post.getId()));
+//        }
+//        // 3) 요청받은 DTO를 DB에 저장할 객체 만들기
+//        return ResponseEntity.ok().body(postResponseList);
+//    }
 
     // 게시글 상세 조회 (선택한 게시글 조회)
     @Transactional
@@ -98,7 +118,7 @@ public class PostService {
     // 게시글에 있는 댓글 가져오기
     private List<CommentResponseDto> getComment(Post post) {
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
-        List<Comment> commentList = commentRepository.findAllByBlogOrderByCreateAtDesc(post);
+        List<Comment> commentList = commentRepository.findAllByPostOrderByCreatedAtDesc(post);
         for (Comment c : commentList) {
             commentResponseDtoList.add(new CommentResponseDto()); //c));
         }
@@ -108,7 +128,7 @@ public class PostService {
     // 게시글 하트 가져오기
     private boolean isHeart(User user, Post post) {
         boolean heart = false;
-        Long likeCheck = likeRepository.countByPostIdAndUserId(post.getId(), user.getId());
+        Long likeCheck = postLikeRepository.countByPostId_AndUser_UserId(post.getId(), user.getUserId());
         if (likeCheck != 0)
             heart = true;
         return heart;
@@ -116,9 +136,9 @@ public class PostService {
 
     // 게시글 좋아요 누르기
     public void likePost(Post post, boolean heart) {
-        Long likeNo = post.getPostlikes();
-        if (heart) post.Likes(likeNo + 1);
-        else post.Likes(likeNo - 1);
+        Long likeId = post.getPostlikes();
+        if (heart) post.Likes(likeId + 1);
+        else post.Likes(likeId - 1);
     }
 }
 

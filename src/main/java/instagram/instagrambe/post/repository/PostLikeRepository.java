@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostLikeRepository extends JpaRepository<PostLike,Long> {
 
-    Long countByPostIdAndUserId(Long postId, Long user_id);
+    Long countByPostId_AndUser_UserId(Long postId, Long userId);
 
-    void deleteByPostIdAndUserId(Long postId, Long user_id);
+    void deleteByPostId_AndUser_UserId(Long postId, Long userId);
 
 }

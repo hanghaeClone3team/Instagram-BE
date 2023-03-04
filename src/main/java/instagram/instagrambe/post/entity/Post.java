@@ -27,10 +27,10 @@ public class Post extends Timestamped {
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "blog")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "post")
     private List<PostLike> postlike = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "blog")
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
 
@@ -45,7 +45,7 @@ public class Post extends Timestamped {
         this.postlikes = likes;
     }
 
-    public void update(PostRequestDto blogRequestDto) {
-        this.content = blogRequestDto.getContents();
+    public void update(PostRequestDto postRequestDto) {
+        this.content = postRequestDto.getContents();
     }
 }

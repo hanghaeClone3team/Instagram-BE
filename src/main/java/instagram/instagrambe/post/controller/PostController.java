@@ -20,6 +20,7 @@ public class PostController {
     private final PostService postService;
 
     // 게시글 작성
+    @PostMapping
     public ResponseEntity<PostResponseDto> createPost(@RequestPart MultipartFile image,
                                                       @RequestPart PostRequestDto postRequestDto,
                                                       @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
