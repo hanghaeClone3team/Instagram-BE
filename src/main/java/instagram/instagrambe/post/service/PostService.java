@@ -120,7 +120,7 @@ public class PostService {
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
         List<Comment> commentList = commentRepository.findAllByPostOrderByCreatedAtDesc(post);
         for (Comment c : commentList) {
-            commentResponseDtoList.add(new CommentResponseDto()); //c));
+            commentResponseDtoList.add(new CommentResponseDto(c)); //c));
         }
         return commentResponseDtoList;
     }
