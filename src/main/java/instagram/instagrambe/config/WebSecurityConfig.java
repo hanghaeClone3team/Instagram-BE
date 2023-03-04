@@ -1,4 +1,4 @@
-package src.main.java.instagram.instagrambe.config;
+package instagram.instagrambe.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import instagram.instagrambe.config.ExceptionHandlerFilter;
@@ -32,12 +32,15 @@ public class WebSecurityConfig {
     private final ObjectMapper om;
     private final UserRepository userRepository;
 
-    //
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+//    @Bean
+//    public PasswordEncoder passwordEncoder(){
+//        PasswordEncoder encoder = new BCryptPasswordEncoder();
+//        return encoder;
+//    }
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         // h2-console 사용 및 resources 접근 허용 설정
