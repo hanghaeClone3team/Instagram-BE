@@ -67,7 +67,7 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
         );
-        if(!passwordEncoder.matches(password, user.getPassword())) {
+        if(!password.equals(user.getPassword())) {
             throw new CustomException(ErrorCode.INVALIDATION_PASSWORD);
         }
         response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(user.getUsername(), user.getRole()));
