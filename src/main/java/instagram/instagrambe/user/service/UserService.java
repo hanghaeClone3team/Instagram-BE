@@ -10,7 +10,6 @@ import instagram.instagrambe.user.repository.UserRepository;
 import instagram.instagrambe.util.CustomException;
 import instagram.instagrambe.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Check;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
