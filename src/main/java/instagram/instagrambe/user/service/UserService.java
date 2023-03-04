@@ -61,10 +61,11 @@ public class UserService {
 
     @Transactional
     public void login(LoginRequestDto requestDto, HttpServletResponse response) {
-        String username = requestDto.getUsername();
+//        String username = requestDto.getUsername();
         String password = requestDto.getPassword();
+        String email = requestDto.getEmail();
 
-        User user = userRepository.findByEmail(username).orElseThrow(
+        User user = userRepository.findByEmail(email).orElseThrow(
                 () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
         );
         if(!password.equals(user.getPassword())) {
