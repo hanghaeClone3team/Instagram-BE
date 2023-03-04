@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/content")
+@RequestMapping("/api/post")
 public class PostLikeController {
    private final PostLikeService postLikeService;
    @PostMapping("/{postId}/like")
