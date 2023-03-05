@@ -26,6 +26,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Getter
 @RestController
@@ -45,6 +46,13 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody SignupRequestDto requestDto, BindingResult result){
+        String username = requestDto.getUsername();
+
+        Optional<User> found = userRepository.findByUsername(username);
+        if(found.isPresent()){
+            throw new CustomException(ErrorCode.DUPLICATE_MEMBER);
+        }
+
         if(result.hasErrors()) return ResponseEntity.status(400).body(result.getAllErrors());
         userService.signup(requestDto);
         return ResponseEntity.status(HttpStatus.OK).body("회원가입 완료");
