@@ -46,18 +46,18 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody SignupRequestDto requestDto, BindingResult result){
-        String username = requestDto.getUsername();
+//        String username = requestDto.getUsername();
         String email = requestDto.getEmail();
 
-//        Optional<User> found = userRepository.findByUsername(username);
-//        if(found.isPresent()){
-//            throw new CustomException(ErrorCode.DUPLICATE_MEMBER);
-//        }
-
-        Optional<User> foundEmail = userRepository.findByEmail(email);
-        if(foundEmail.isPresent()){
+        Optional<User> found = userRepository.findByUsername(email);
+        if(found.isPresent()){
             throw new CustomException(ErrorCode.DUPLICATE_MEMBER);
         }
+
+//        Optional<User> foundEmail = userRepository.findByEmail(email);
+//        if(foundEmail.isPresent()){
+//            throw new CustomException(ErrorCode.DUPLICATE_MEMBER);
+//        }
 
         if(result.hasErrors()) return ResponseEntity.status(400).body(result.getAllErrors());
         userService.signup(requestDto);
