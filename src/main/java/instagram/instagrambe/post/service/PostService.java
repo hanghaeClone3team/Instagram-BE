@@ -1,8 +1,11 @@
 package instagram.instagrambe.post.service;
 
+import instagram.instagrambe.comment.dto.CommentReplyResponseDto;
 import instagram.instagrambe.comment.dto.CommentResponseDto;
 import instagram.instagrambe.comment.entity.Comment;
+import instagram.instagrambe.comment.entity.CommentReply;
 import instagram.instagrambe.comment.repository.CommentHeartRepository;
+import instagram.instagrambe.comment.repository.CommentReplyRepository;
 import instagram.instagrambe.comment.repository.CommentRepository;
 import instagram.instagrambe.post.dto.PostRequestDto;
 import instagram.instagrambe.post.dto.PostResponseDto;
@@ -32,7 +35,8 @@ public class PostService {
     private final S3Uploader s3Uploader;
     private final PostLikeRepository postLikeRepository;
     private final CommentRepository commentRepository;
-//    private final CommentLikeRespositoy commentLikeRespositoy;
+    private final CommentReplyRepository commentReplyRepository;
+
 
 
     // 게시글 작성
@@ -73,7 +77,6 @@ public class PostService {
 //            List<CommentResponseDto> commentList = new ArrayList<>();
 //            for (Comment comment : post.getComments()) {
 //                commentList.add(CommentResponseDto.from(comment, commentLikeRespositoy.countCommentLikesByCommentId(comment.getId())));
-//                // 이너 클래스 고치기 제발좀 고치자 자고 일어나서 하자
 //            }
 //            postResponseList.add(PostResponseDto.from(post, commentList, postLikeRepository.countByPostIdAndUserId(post.getId()));
 //        }
@@ -115,15 +118,36 @@ public class PostService {
         else throw new CustomException(FORBIDDEN_DATA);
         return ResponseEntity.ok().body("게시글 삭제 성공");
     }
+
     // 게시글에 있는 댓글 가져오기
+//    private List<CommentResponseDto> getComment(Post post) {
+//        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+//        List<Comment> commentList = commentRepository.findAllByPostOrderByCreatedAtDesc(post);
+//        for (Comment c : commentList) {
+//            commentResponseDtoList.add(new CommentResponseDto(c));
+//        }
+//        return commentResponseDtoList;
+//    }
     private List<CommentResponseDto> getComment(Post post) {
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
         List<Comment> commentList = commentRepository.findAllByPostOrderByCreatedAtDesc(post);
         for (Comment c : commentList) {
-            commentResponseDtoList.add(new CommentResponseDto(c)); //c));
+            log.info("comment = {}", c.getComment());
+            CommentResponseDto commentDto = new CommentResponseDto(c);
+            List<CommentReply> commentReplyList = commentReplyRepository.findAllByCommentOrderByCreatedAtDesc(c);
+            for (CommentReply commentReply : commentReplyList) {
+                log.info("commentReply = {}", commentReply.getCommentReply());
+                commentDto.addCommentReplies(commentReply);
+            }
+            commentResponseDtoList.add(commentDto);
+//            commentResponseDtoList.add(new CommentResponseDto(c));
+//            for (CommentReply commentReply : commentReplyList) {
+//                commentResponseDtoList.add(new CommentResponseDto());
+//            }
         }
         return commentResponseDtoList;
     }
+
 
     // 게시글 하트 가져오기
     private boolean isHeart(User user, Post post) {

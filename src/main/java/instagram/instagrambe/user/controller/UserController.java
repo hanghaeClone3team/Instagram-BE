@@ -1,8 +1,5 @@
 package instagram.instagrambe.user.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import instagram.instagrambe.jwt.JwtUtil;
-import instagram.instagrambe.kakao.service.KaKaoService;
 import instagram.instagrambe.user.dto.CheckIdDto;
 import instagram.instagrambe.user.dto.LoginRequestDto;
 import instagram.instagrambe.user.dto.SignupRequestDto;
@@ -22,7 +19,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -36,7 +32,6 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final KaKaoService kaKaoService;
 
     @PostMapping("/checkid")
     public ResponseEntity<String> checkId(@Valid @RequestBody CheckIdDto checkIdDto){
@@ -92,15 +87,5 @@ public class UserController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return ResponseEntity.status(HttpStatus.OK).body("로그아웃 완료");
-    }
-
-    @GetMapping("/kakao/login")
-    public String kaKaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException{
-        String createToken = kaKaoService.kaKaoLogin(code, response);
-
-        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, createToken.substring(7));
-        cookie.setPath("/");
-
-        return "redirect:/api/post";
     }
 }
