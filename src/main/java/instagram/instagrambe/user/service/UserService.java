@@ -2,7 +2,6 @@ package instagram.instagrambe.user.service;
 
 import instagram.instagrambe.jwt.JwtUtil;
 import instagram.instagrambe.user.dto.CheckIdDto;
-import instagram.instagrambe.user.dto.LoginRequestDto;
 import instagram.instagrambe.user.dto.SignupRequestDto;
 import instagram.instagrambe.user.entity.User;
 import instagram.instagrambe.user.entity.UserRoleEnum;
@@ -11,7 +10,6 @@ import instagram.instagrambe.util.CustomException;
 import instagram.instagrambe.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +21,6 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
-    private final PasswordEncoder passwordEncoder;
 
     @Value("${admin.token}")
     private String ADMIN_TOKEN;
@@ -41,12 +38,6 @@ public class UserService {
 
     @Transactional
     public void signup(SignupRequestDto requestDto) {
-        String username = requestDto.getUsername();
-        String nickname = requestDto.getNickname();
-        String email = requestDto.getEmail();
-        String password = requestDto.getPassword();
-        String password2 = requestDto.getPassword2();
-
         UserRoleEnum role = UserRoleEnum.USER;
         if(requestDto.isAdmin()){
             if(!requestDto.getAdminToken().equals(ADMIN_TOKEN)){
@@ -55,22 +46,13 @@ public class UserService {
             role = UserRoleEnum.ADMIN;
         }
 
-        User user = new User(username, nickname, email, password, role);
+        User user = new User(requestDto, role);
         userRepository.save(user);
     }
 
     @Transactional
-    public void login(LoginRequestDto requestDto, HttpServletResponse response) {
+    public void login(String username, UserRoleEnum Role, HttpServletResponse response) {
 //        String username = requestDto.getUsername();
-        String password = requestDto.getPassword();
-        String email = requestDto.getEmail();
-
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
-        );
-        if(!password.equals(user.getPassword())) {
-            throw new CustomException(ErrorCode.INVALIDATION_PASSWORD);
-        }
-        response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(user.getUsername(), user.getRole()));
+        response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(username, Role));
     }
 }

@@ -1,5 +1,6 @@
 package instagram.instagrambe.user.entity;
 
+import instagram.instagrambe.user.dto.SignupRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,11 +31,11 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
-    public User(String username,String nickname, String email, String password, UserRoleEnum role) {
-        this.username = username;
-        this.nickname = nickname;
-        this.email = email;
-        this.password = password;
+    public User(SignupRequestDto requestDto, UserRoleEnum role) {
+        this.username = requestDto.getUsername();
+        this.nickname = requestDto.getNickname();
+        this.email = requestDto.getEmail();
+        this.password = requestDto.getPassword();
         this.role = role;
     }
 }
