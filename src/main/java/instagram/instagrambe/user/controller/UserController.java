@@ -38,7 +38,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final KaKaoService kaKaoService;
 
-    @PostMapping("/checkId")
+    @PostMapping("/checkid")
     public ResponseEntity<String> checkId(@Valid @RequestBody CheckIdDto checkIdDto){
         userService.checkId(checkIdDto);
         return ResponseEntity.status(HttpStatus.OK).body("사용 가능한 아이디입니다.");
@@ -49,13 +49,13 @@ public class UserController {
         String username = requestDto.getUsername();
         String email = requestDto.getEmail();
 
-        Optional<User> found = userRepository.findByUsername(username);
-        if(found.isPresent()){
-            throw new CustomException(ErrorCode.DUPLICATE_MEMBER);
-        }
+//        Optional<User> found = userRepository.findByUsername(username);
+//        if(found.isPresent()){
+//            throw new CustomException(ErrorCode.DUPLICATE_MEMBER);
+//        }
 
         Optional<User> foundEmail = userRepository.findByEmail(email);
-        if(found.isPresent()){
+        if(foundEmail.isPresent()){
             throw new CustomException(ErrorCode.DUPLICATE_MEMBER);
         }
 
@@ -75,11 +75,11 @@ public class UserController {
         if(!passwordEncoder.matches(user.getPassword(), password)) {
             throw new CustomException(ErrorCode.INVALIDATION_PASSWORD);
         }
-
-        User user1 = userRepository.findByUsername(email).orElseThrow(
-                () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
-        );
-        userService.login(user1.getUsername(), user1.getRole(), response);
+//
+//        User user1 = userRepository.findByUsername(email).orElseThrow(
+//                () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
+//        );
+//        userService.login(user1.getUsername(), user1.getRole(), response);
 
         userService.login(user.getUsername(), user.getRole(), response);
         return ResponseEntity.status(HttpStatus.OK).body("로그인 완료");
