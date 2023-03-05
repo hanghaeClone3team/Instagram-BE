@@ -48,12 +48,12 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
         String email = requestDto.getEmail();
-        String password = requestDto.getPassword();
+        String password = passwordEncoder.encode(requestDto.getPassword());
 
         User user = userRepository.findByEmail(email).orElseThrow(
                 () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
         );
-        if(!passwordEncoder.matches(password, user.getPassword())) {
+        if(!passwordEncoder.matches(user.getPassword(), password)) {
             throw new CustomException(ErrorCode.INVALIDATION_PASSWORD);
         }
         userService.login(user.getUsername(), user.getRole(), response);
