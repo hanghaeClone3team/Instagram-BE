@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/checkId")
     public ResponseEntity<String> checkId(@Valid @RequestBody CheckIdDto checkIdDto){
@@ -45,7 +47,16 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
-        userService.login(requestDto, response);
+        String email = requestDto.getEmail();
+        String password = requestDto.getPassword();
+
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
+        );
+        if(!passwordEncoder.matches(password, user.getPassword())) {
+            throw new CustomException(ErrorCode.INVALIDATION_PASSWORD);
+        }
+        userService.login(user.getUsername(), user.getRole(), response);
         return ResponseEntity.status(HttpStatus.OK).body("로그인 완료");
     }
 
