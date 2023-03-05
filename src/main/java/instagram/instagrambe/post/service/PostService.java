@@ -1,10 +1,10 @@
 package instagram.instagrambe.post.service;
 
-import instagram.instagrambe.comment.dto.CommentReplyResponseDto;
+//import instagram.instagrambe.comment.dto.CommentReplyResponseDto;
+
 import instagram.instagrambe.comment.dto.CommentResponseDto;
 import instagram.instagrambe.comment.entity.Comment;
 import instagram.instagrambe.comment.entity.CommentReply;
-import instagram.instagrambe.comment.repository.CommentHeartRepository;
 import instagram.instagrambe.comment.repository.CommentReplyRepository;
 import instagram.instagrambe.comment.repository.CommentRepository;
 import instagram.instagrambe.post.dto.PostRequestDto;
@@ -132,11 +132,11 @@ public class PostService {
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
         List<Comment> commentList = commentRepository.findAllByPostOrderByCreatedAtDesc(post);
         for (Comment c : commentList) {
-            log.info("comment = {}", c.getComment());
+//            log.info("comment = {}", c.getComment());
             CommentResponseDto commentDto = new CommentResponseDto(c);
             List<CommentReply> commentReplyList = commentReplyRepository.findAllByCommentOrderByCreatedAtDesc(c);
             for (CommentReply commentReply : commentReplyList) {
-                log.info("commentReply = {}", commentReply.getCommentReply());
+//                log.info("commentReply = {}", commentReply.getCommentReply());
                 commentDto.addCommentReplies(commentReply);
             }
             commentResponseDtoList.add(commentDto);
