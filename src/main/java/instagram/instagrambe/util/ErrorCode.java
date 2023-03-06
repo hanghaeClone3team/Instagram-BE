@@ -5,7 +5,6 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.HttpStatus.CONFLICT;
 
 @Getter
 @AllArgsConstructor
@@ -50,3 +49,5 @@ public enum ErrorCode {
     private final HttpStatus httpStatus;
     private final String detail;
 }
+
+
