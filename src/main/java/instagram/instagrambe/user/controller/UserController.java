@@ -48,9 +48,10 @@ public class UserController {
     public ResponseEntity<?> signup(@Valid @RequestBody SignupRequestDto requestDto, BindingResult result){
         String username = requestDto.getUsername();
         String email = requestDto.getEmail();
+        String nickname = requestDto.getNickname();
 
-        Optional<User> founduser = userRepository.findByUsername(username);
-        if(founduser.isPresent()){
+        Optional<User> foundUser = userRepository.findByUsername(username);
+        if(foundUser.isPresent()){
             throw new CustomException(ErrorCode.DUPLICATE_MEMBER);
         }
 
@@ -59,29 +60,31 @@ public class UserController {
             throw new CustomException(ErrorCode.DUPLICATE_MEMBER);
         }
 
+        if(!requestDto.getPassword().equals(requestDto.getPassword2())) {
+            throw new CustomException(ErrorCode.INVALIDATION_PASSWORD);
+        }
+
+        String password = passwordEncoder.encode(requestDto.getPassword());
+
         if(result.hasErrors()) return ResponseEntity.status(400).body(result.getAllErrors());
-        userService.signup(requestDto);
+        userService.signup(requestDto, username, nickname, email, password, requestDto.getAdminToken());
         return ResponseEntity.status(HttpStatus.OK).body("회원가입 완료");
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
-        String email = requestDto.getEmail();
+        String usernameOrEmail = requestDto.getEmail();
         String password = passwordEncoder.encode(requestDto.getPassword());
 
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
-        );
-        if(!passwordEncoder.matches(user.getPassword(), password)) {
+        Optional<User> user = userRepository.findByUsernameOrEmail(usernameOrEmail);
+
+        if(user.isEmpty()) throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+        userService.login(usernameOrEmail, user.get().getRole(), response);
+
+        if(!passwordEncoder.matches(password, user.get().getPassword())) {
             throw new CustomException(ErrorCode.INVALIDATION_PASSWORD);
         }
-//
-//        User user1 = userRepository.findByUsername(email).orElseThrow(
-//                () -> new CustomException(ErrorCode.MEMBER_NOT_FOUND)
-//        );
-//        userService.login(user1.getUsername(), user1.getRole(), response);
 
-        userService.login(user.getUsername(), user.getRole(), response);
         return ResponseEntity.status(HttpStatus.OK).body("로그인 완료");
     }
 
