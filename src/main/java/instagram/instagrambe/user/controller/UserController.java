@@ -76,7 +76,7 @@ public class UserController {
         String usernameOrEmail = requestDto.getEmail();
         String password = passwordEncoder.encode(requestDto.getPassword());
 
-        Optional<User> user = userRepository.findByUsernameOrEmail(usernameOrEmail);
+        Optional<User> user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
 
         if(user.isEmpty()) throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
         userService.login(usernameOrEmail, user.get().getRole(), response);
