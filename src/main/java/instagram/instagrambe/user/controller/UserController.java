@@ -74,9 +74,9 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
         String usernameOrEmail = requestDto.getEmail();
-        String password = passwordEncoder.encode(requestDto.getPassword());
+        String password = requestDto.getPassword();
 
-        Optional<User> user = userRepository.findByUsernameOrEmail(usernameOrEmail);
+        Optional<User> user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
 
         if(user.isEmpty()) throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
         userService.login(usernameOrEmail, user.get().getRole(), response);

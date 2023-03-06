@@ -16,11 +16,11 @@ public class Follow {
     private Long Id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name ="user_id")
+    @JoinColumn(name ="followerId")
     private User follower;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
+    @JoinColumn(name = "followingId")
     private User following;
 
 

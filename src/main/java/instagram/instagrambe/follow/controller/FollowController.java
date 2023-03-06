@@ -32,8 +32,8 @@ public class FollowController {
 
         Follow follow = followRepository.findByFollowerAndFollowing(follower, following);
         if (follow != null){
-            followService.follow(following, follower);
-        } else followRepository.deleteByFollowerAndFollowing(following, follower);
+            followRepository.deleteByFollowerAndFollowing(following, follower);
+        } else followService.follow(follow);
 
         return ResponseEntity.ok().body("팔로우");
     }

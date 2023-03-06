@@ -53,6 +53,7 @@ public class UserService {
     @Transactional
     public void login(String usernameOrEmail, UserRoleEnum Role, HttpServletResponse response) {
 //        String username = requestDto.getUsername();
-        response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(usernameOrEmail, Role));
+        Optional<User> user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
+        response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(user.get().getUsername(), Role));
     }
 }
