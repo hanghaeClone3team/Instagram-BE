@@ -37,22 +37,22 @@ public class UserService {
     }
 
     @Transactional
-    public void signup(SignupRequestDto requestDto) {
+    public void signup(SignupRequestDto requestDto, String username, String nickname, String email, String password, String adminToken) {
         UserRoleEnum role = UserRoleEnum.USER;
         if(requestDto.isAdmin()){
-            if(!requestDto.getAdminToken().equals(ADMIN_TOKEN)){
+            if(!adminToken.equals(ADMIN_TOKEN)){
                 throw new CustomException(ErrorCode.FORBIDDEN_DATA);
             }
             role = UserRoleEnum.ADMIN;
         }
 
-        User user = new User(requestDto, role);
+        User user = new User(username, nickname, email, password, role);
         userRepository.save(user);
     }
 
     @Transactional
-    public void login(String username, UserRoleEnum Role, HttpServletResponse response) {
+    public void login(String usernameOrEmail, UserRoleEnum Role, HttpServletResponse response) {
 //        String username = requestDto.getUsername();
-        response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(username, Role));
+        response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(usernameOrEmail, Role));
     }
 }

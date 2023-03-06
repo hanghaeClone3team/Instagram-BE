@@ -18,10 +18,4 @@ public class FollowService {
         Follow follow = new Follow(following, follower);
         followRepository.save(follow);
     }
-
-    @Transactional
-    public void unfollow(User following, User follower){
-        Follow follow = new Follow(following, follower);
-        followRepository.delete(follow);
-    }
 }
