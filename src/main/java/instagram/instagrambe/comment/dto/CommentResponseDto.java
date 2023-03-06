@@ -14,10 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 public class CommentResponseDto {
 
+    private Long comment_id;
     private String comments;
     private List<String> commentReplies = new ArrayList<>();
 
     public CommentResponseDto(Comment c) {
+        this.comment_id = c.getId();
         this.comments = c.getComment();
     }
 
