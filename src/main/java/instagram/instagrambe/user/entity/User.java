@@ -1,10 +1,13 @@
 package instagram.instagrambe.user.entity;
 
+import instagram.instagrambe.post.entity.Post;
 import instagram.instagrambe.user.dto.SignupRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity(name = "users")
@@ -32,6 +35,9 @@ public class User {
     private UserRoleEnum role;
 
     private Long kakaoId;
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
+    private List<Post> post = new ArrayList<>();
 
     public User(SignupRequestDto requestDto, UserRoleEnum role) {
         this.username = requestDto.getUsername();
