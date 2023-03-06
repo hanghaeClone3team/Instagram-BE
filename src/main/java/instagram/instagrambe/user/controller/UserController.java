@@ -74,7 +74,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
         String usernameOrEmail = requestDto.getEmail();
-        String password = passwordEncoder.encode(requestDto.getPassword());
+        String password = requestDto.getPassword();
 
         Optional<User> user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
 
