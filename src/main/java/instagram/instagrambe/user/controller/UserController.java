@@ -87,15 +87,14 @@ public class UserController {
 
     @GetMapping("/kakao/login")
     public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-        // code: 카카오 서버로부터 받은 인가 코드
         String createToken = kakaoService.kakaoLogin(code, response);
 
-        // Cookie 생성 및 직접 브라우저에 Set
         Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, createToken.substring(7));
         cookie.setPath("/");
         response.addCookie(cookie);
 
-        return "redirect:http://3.34.133.26:8080/board";
+        // 프론트 서버와 연결 필수
+        return "redirect:http://localhost:3000/board";
     }
 
     @GetMapping("/logout")

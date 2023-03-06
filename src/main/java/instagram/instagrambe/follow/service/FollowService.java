@@ -14,14 +14,14 @@ public class FollowService {
     private final FollowRepository followRepository;
 
     @Transactional
-    public void follow(Long fromUserId, User toUser) {
-        Follow follow = new Follow(fromUserId, toUser);
+    public void follow(User following, User follower) {
+        Follow follow = new Follow(following, follower);
         followRepository.save(follow);
     }
 
     @Transactional
-    public void unfollow(Long fromUserId, User toUser){
-        Follow follow = new Follow(fromUserId, toUser);
+    public void unfollow(User following, User follower){
+        Follow follow = new Follow(following, follower);
         followRepository.delete(follow);
     }
 }
