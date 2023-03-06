@@ -31,11 +31,26 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
+    private Long kakaoId;
+
     public User(SignupRequestDto requestDto, UserRoleEnum role) {
         this.username = requestDto.getUsername();
         this.nickname = requestDto.getNickname();
         this.email = requestDto.getEmail();
         this.password = requestDto.getPassword();
         this.role = role;
+    }
+
+    public User(String username, Long kakaoId, String password, String email, UserRoleEnum role) {
+        this.username = username;
+        this.kakaoId = kakaoId;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
+    public User kakaoIdUpdate(Long kakaoId){
+        this.kakaoId = kakaoId;
+        return this;
     }
 }
