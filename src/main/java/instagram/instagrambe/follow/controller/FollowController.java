@@ -1,6 +1,5 @@
 package instagram.instagrambe.follow.controller;
 
-import instagram.instagrambe.follow.entity.Follow;
 import instagram.instagrambe.follow.repository.FollowRepository;
 import instagram.instagrambe.follow.service.FollowService;
 import instagram.instagrambe.user.entity.User;
@@ -22,19 +21,13 @@ public class FollowController {
     private final FollowService followService;
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
-
     @PostMapping("/follow/{userId}")
-    public ResponseEntity<String> follow(@PathVariable Long userId, @AuthenticationPrincipal UserDetails userDetails){
+    public ResponseEntity<Long> follow(@PathVariable Long userId, @AuthenticationPrincipal UserDetails userDetails){
         User follower = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_CLIENT));
-        User following = userRepository.findById(userId).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_CLIENT));
+        userRepository.findByUserId(userId).orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_CLIENT));
 
-        if (following.equals(follower)) throw new IllegalArgumentException("자기 자신을 팔로우할 수 없습니다.");
+        if (follower.equals(userId)) throw new IllegalArgumentException("자기 자신을 팔로우할 수 없습니다.");
 
-        Follow follow = followRepository.findByFollowerAndFollowing(follower, following);
-        if (follow != null){
-            followRepository.deleteByFollowerAndFollowing(following, follower);
-        } else followService.follow(follow);
-
-        return ResponseEntity.ok().body("팔로우");
+        return followService.follow(follower, userId);
     }
 }

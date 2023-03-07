@@ -1,6 +1,7 @@
 package instagram.instagrambe.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import instagram.instagrambe.user.dto.SearchDto;
 import instagram.instagrambe.jwt.JwtUtil;
 import instagram.instagrambe.user.dto.CheckIdDto;
 import instagram.instagrambe.user.dto.LoginRequestDto;
@@ -26,6 +27,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Getter
