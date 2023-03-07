@@ -1,5 +1,6 @@
 package instagram.instagrambe.user.entity;
 
+import instagram.instagrambe.follow.entity.Follow;
 import instagram.instagrambe.post.entity.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,11 @@ public class User {
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
     private List<Post> post = new ArrayList<>();
+
+//    private List<Follow> follower = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
+    private List<Follow> following = new ArrayList<>();
 
     public User(String username, String nickname, String email, String password, UserRoleEnum role) {
         this.username = username;

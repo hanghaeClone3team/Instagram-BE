@@ -3,7 +3,6 @@ package instagram.instagrambe.follow.entity;
 import instagram.instagrambe.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.utility.nullability.MaybeNull;
 
 import javax.persistence.*;
 
@@ -16,16 +15,13 @@ public class Follow {
     private Long Id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name ="followerId")
-    private User follower;
+    @JoinColumn(name ="follower_id")
+    private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "followingId")
-    private User following;
+    private Long following;
 
-
-    public Follow(User follower, User following){
-        this.follower = follower;
-        this.following = following;
+    public Follow(User follower, Long followingId){
+        this.user = follower;
+        this.following = followingId;
     }
 }
