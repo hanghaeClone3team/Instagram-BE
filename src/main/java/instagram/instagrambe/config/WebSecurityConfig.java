@@ -60,10 +60,15 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.GET, "/api/blogs/**").permitAll()
 //                .antMatchers(HttpMethod.POST, "/api/logout").permitAll()
                 .antMatchers("/api/reply/**").permitAll()
+                .antMatchers("/api/reply/**").permitAll()
+                .antMatchers("/chat/**").permitAll()
+                .antMatchers("/ws/**").permitAll()
                 .anyRequest().authenticated()
                 // JWT 인증/인가를 사용하기 위한 설정
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)//    private final JwtUtil jwtUtil; 추가하기!
                 .addFilterBefore(new ExceptionHandlerFilter(), JwtAuthFilter.class);    // JwtAuthFilter 전에 예외 처리 필터 추가
+
+        http.headers().frameOptions().sameOrigin();
 
         http.cors();
         // 로그인 사용
