@@ -3,6 +3,7 @@ package instagram.instagrambe.chat.controller;
 import instagram.instagrambe.chat.dto.FollowDto;
 import instagram.instagrambe.chat.dto.RoomDto;
 import instagram.instagrambe.chat.dto.TestDto;
+import instagram.instagrambe.chat.model.ChatMessage;
 import instagram.instagrambe.chat.service.RoomService;
 import instagram.instagrambe.config.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class RoomController {
 
     // 대화 입력 테스트
     @PostMapping("/test")
-    public void chatTest(@RequestBody TestDto dto) {
-        roomService.chatTest(dto);
+    public void chatTest(@RequestBody ChatMessage message) {
+        roomService.saveMessage(message);
     }
 }

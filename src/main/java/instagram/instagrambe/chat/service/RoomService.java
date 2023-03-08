@@ -5,6 +5,7 @@ import instagram.instagrambe.chat.dto.RoomDto;
 import instagram.instagrambe.chat.dto.TestDto;
 import instagram.instagrambe.chat.entity.Message;
 import instagram.instagrambe.chat.entity.Room;
+import instagram.instagrambe.chat.model.ChatMessage;
 import instagram.instagrambe.chat.repository.MessageRepository;
 import instagram.instagrambe.chat.repository.RoomRepository;
 import instagram.instagrambe.config.UserDetailsImpl;
@@ -63,10 +64,11 @@ public class RoomService {
         return roomDto;
     }
 
-    public void chatTest(TestDto dto) {
-        Room room = roomRepository.findById(dto.getRoomId()).orElseThrow(
+    // 메시지 저장
+    public void saveMessage(ChatMessage message) {
+        Room room = roomRepository.findById(Long.valueOf(message.getRoomId())).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND_DATA)
         );
-        messageRepository.save(new Message(room, dto.getSender(), dto.getMessage()));
+        messageRepository.save(new Message(room, message.getSender(), message.getMessage()));
     }
 }
