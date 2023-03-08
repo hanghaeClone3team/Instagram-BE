@@ -14,6 +14,7 @@ public enum ErrorCode {
     MISMATCH_TOKEN(BAD_REQUEST, "토큰의 유저 정보가 일치하지 않습니다"),
     INVALIDATION_SIGNUP(BAD_REQUEST, "username과 password의 형식을 지켜주세요."),
     INVALIDATION_PASSWORD(BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
+    NO_FOLLOW(BAD_REQUEST, "팔로우 관계가 아닙니다."),
 
 
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */

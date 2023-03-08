@@ -23,4 +23,10 @@ public class Message {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
+
+    public Message(Room room, String sender, String message) {
+        this.sender = sender;
+        this.message = message;
+        this.room = room;
+    }
 }
