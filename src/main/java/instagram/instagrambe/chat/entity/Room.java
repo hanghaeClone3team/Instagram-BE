@@ -2,7 +2,7 @@ package instagram.instagrambe.chat.entity;
 
 import instagram.instagrambe.follow.entity.Follow;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -10,7 +10,7 @@ import static javax.persistence.FetchType.*;
 
 @Entity
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Room {
 
     @Id
@@ -21,4 +21,8 @@ public class Room {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "follow_id")
     private Follow follow;
+
+    public Room(Follow follow) {
+        this.follow = follow;
+    }
 }
