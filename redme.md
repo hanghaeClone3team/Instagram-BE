@@ -63,5 +63,68 @@
 ![스크린샷 2023-03-09 오후 8 35 55](https://user-images.githubusercontent.com/111184537/224042546-ff9aae48-3585-4019-86d5-fd57bfadec36.png)
 ![스크린샷 2023-03-09 오후 8 36 12](https://user-images.githubusercontent.com/111184537/224042580-f70e22eb-232f-48bc-b6cf-9f02ad73e771.png)
 
+------------
 
+# 7. 결과물
+홈페이지 주소 : [http://instagram-sparta.s3-website.ap-northeast-2.amazonaws.com/](http://instagram-sparta.s3-website.ap-northeast-2.amazonaws.com/)
 
+시연 영상 :  [https://www.youtube.com/watch?v=p8W-KzFsETk&t=3s](https://www.youtube.com/watch?v=p8W-KzFsETk&t=3s)
+
+BE
+
+[https://github.com/hanghaeClone3team/Instagram-BE.git](https://github.com/hanghaeClone3team/Instagram-BE.git)
+
+FE
+
+[https://github.com/hanghaeClone3team/instagram-FE-EC2.git](https://github.com/hanghaeClone3team/instagram-FE-EC2.git)
+
+---
+
+### 채팅 필요사항
+
+---
+
+- 채팅방 구독 sub/chat/roomId
+- 채팅방 발행 pub/chat/roomId
+- 메시지를 보내면 메시지 목록에 저장하기
+    
+    → 필요한 것 : roomId, 작성자, 메시지
+    
+
+- DM 입장 시 팔로우된 사람들 목록 반환
+- 채팅방 입장
+    - 채팅방이 존재하는 여부 확인 (token → username 추출, PathVariable의 user_id로 찾기)
+        - 있으면 그 채팅방 반환
+        - 없으면 채팅방 생성 후 반환
+    - 받고 프론트는 handshake, 구독하기
+    - 내용 전달받으면 페이지에 뿌려주기
+---
+
+# 8. 주간 할일
+
+|  | 3월 3(금) | 3월 4(토) | 3월 5일 (일) | 3월 6일(월) | 3월 7일(화) | 3월 8일(수) | 3월 9월(목) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 박성민(BE) | 로그인, 로그아웃, 회원가입 | EC2 연결 | RDS, S3서버 연결 | S3서버 연결, 채팅 공부 | 팔로우, 페이지네이션 | 팔로우 연관관계, 페이지네이션 | 페이지 네이션
+팔로우 연관관계,
+도커 공부 |
+| 한승현(BE) | 댓글, 대댓글 CRUD  | 댓글 좋아요,채팅 공부 | 스톰프 예제 코드 작성 | 채팅에 레디스 적용 | 팔로우 된 사람만 DM방에 
+리스트로 반환 | 채팅방 생성 | 도커 공부 |
+| 박현아(BE) | 기획 및 게시글 작성, 조회, 수정, 삭제, 좋아요, 이미지까지 코드작성 완료(내일 수정 예정) | 포스트맨 확인완료(작동함)
+게시글 조회에 댓글, 팔로잉, 좋아요 넣어주기 | 게시글 대댓글 넣기 완료
+ec2, rds, s3 연결
+웹소캣 완성 | 웹소캣 → 스톰프 적용(실패) | 웹소캣 → 스톰프 적용(실패)
+해시태그 및 검색 엔티티 수정 | 해시태그 및 검색 로직 완성 (DB 설계)(실패) | JPA DB 로직 고민
+독커 공부 |
+| 김명주(FE) | 게시물 컴포넌트, 사이드바 컴포넌트 생성 및 css 추가 | FormData 다루는 법 공부
+게시물 생성 및 조회 구현 | 상세페이지, 수정페이지 추가
+게시물 삭제 기능 구현 | FormData 수정 방법 공부
+게시물 댓글 생성 및 삭제 조회 api 완성 | 게시물 수정 기능 구현
+게시물 댓글 생성 및 삭제 조회 api 완성 | 무한스크롤 공부
+게시물 관련 페이지 css 추가 | 게시물 관련 페이지 css 보완 |
+| 이인영(FE) | 로그인, 로그아웃 | 로그인, 로그아웃
+Css추가 | 로그인, 로그아웃 연결시도
+카카오 로그인 
+Css추가 | 카카오 로그인 
+Css추가 | 마이페이지  | 카카오로그인
+배포  | 배포
+Css마무리 |
