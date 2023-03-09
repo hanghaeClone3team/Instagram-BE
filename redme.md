@@ -4,8 +4,8 @@
 # 1. 팀원 정보
 | 이름 | Position | 기능 구현 | 깃허브 주소 |
 | --- | --- | --- | --- |
-| 김명주 | FE |  | https://github.com/oterte |
-| 이인영 | FE |  | https://github.com/yeooong-dev |
+| 김명주 | FE |  | https://github.com/oterte |
+| 이인영 | FE |  | https://github.com/yeooong-dev |
 | 박성민 | BE | 로그인, 회원가입, 팔로우 | https://github.com/seongminnnn |
 | 한승현 | BE | 댓글, 대댓글, 채팅 | https://github.com/gkstmdgus |
 | 박현아 | BE | 게시글, 해시태그 | https://github.com/aihtnyc-h |
