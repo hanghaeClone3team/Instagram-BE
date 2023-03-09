@@ -1,8 +1,18 @@
 ![스크린샷 2023-03-09 오후 10 37 25](https://user-images.githubusercontent.com/111184537/224040677-eb5c332a-6506-49e2-9976-80f0ff3bac67.png)
 
+---
+# 1. 팀원 정보
+| 이름 | Position | 기능 구현 | 깃허브 주소 |
+| --- | --- | --- | --- |
+| 김명주 | FE |  | https://github.com/oterte |
+| 이인영 | FE |  | https://github.com/yeooong-dev |
+| 박성민 | BE | 로그인, 회원가입, 팔로우 | https://github.com/seongminnnn |
+| 한승현 | BE | 댓글, 대댓글, 채팅 | https://github.com/gkstmdgus |
+| 박현아 | BE | 게시글, 해시태그 | https://github.com/aihtnyc-h |
+
 --------
 
-# 1. 기능명세서
+# 2. 기능명세서
 
 
 | 페이지 | 페이지 구분 | 기능 | 세부기능 |
@@ -31,24 +41,24 @@
 
 -------------
 
-# 2. 아키텍쳐
+# 3. 아키텍쳐
 ![스크린샷 2023-03-09 오후 10 37 35](https://user-images.githubusercontent.com/111184537/224040873-0838cad4-af09-49af-97f7-57de52411e5d.png)
 
 -------------
 
-# 3. 와이어 프레임
+# 4. 와이어 프레임
 ![스크린샷 2023-03-09 오후 10 37 46](https://user-images.githubusercontent.com/111184537/224041053-92c9c270-b430-47da-8f13-52513c6190c3.png)
 ![스크린샷 2023-03-09 오후 10 37 55](https://user-images.githubusercontent.com/111184537/224041093-e8f84589-2aa3-415b-a2a4-047e35e7129e.png)
 
 -------------
 
-# 4. ERD
+# 5. ERD
 ![스크린샷 2023-03-07 오후 11 13 55](https://user-images.githubusercontent.com/111184537/224043534-57790f60-5532-4e61-8a91-9220c9bef72f.png)
 
 
 -------------
 
-# 5. 기능구현
+# 6. 기능구현
 ![스크린샷 2023-03-09 오후 10 39 16](https://user-images.githubusercontent.com/111184537/224041199-7cbdf99f-bc77-4936-8926-cc676dfbc491.png)
 ![스크린샷 2023-03-09 오후 10 39 25](https://user-images.githubusercontent.com/111184537/224041638-3d934a3e-b6ba-4e1c-bf74-fb4953cdb1cd.png)
 ![스크린샷 2023-03-09 오후 10 39 33](https://user-images.githubusercontent.com/111184537/224041671-bc419269-d38d-430d-a7d0-d53beb78a5cb.png)
@@ -57,7 +67,7 @@
 
 -------------
 
-# 6. API 명세서
+# 7. API 명세서
 ![스크린샷 2023-03-09 오후 8 35 07](https://user-images.githubusercontent.com/111184537/224042464-81d647ef-0065-4320-a3a1-6053124ec14c.png)
 ![스크린샷 2023-03-09 오후 8 35 36](https://user-images.githubusercontent.com/111184537/224042508-8993cb26-29f9-4fb5-a854-1c0e97da896b.png)
 ![스크린샷 2023-03-09 오후 8 35 55](https://user-images.githubusercontent.com/111184537/224042546-ff9aae48-3585-4019-86d5-fd57bfadec36.png)
@@ -65,7 +75,15 @@
 
 ------------
 
-# 7. 결과물
+# 8. 트러블 슈팅
+![17](https://user-images.githubusercontent.com/111184537/224048574-91ef228e-7797-428c-90b2-9a1002073cda.jpg)
+![18](https://user-images.githubusercontent.com/111184537/224048594-8d37a344-b90a-4c55-8d45-b4040fb80772.jpg)
+![19](https://user-images.githubusercontent.com/111184537/224048604-bb50f7b0-b743-46be-8de2-ac100f7ab2c4.jpg)
+![20](https://user-images.githubusercontent.com/111184537/224048618-a2ea8059-9333-4c3c-b40a-a3e1c2918467.jpg)
+
+----
+
+# 9. 결과물
 홈페이지 주소 : [http://instagram-sparta.s3-website.ap-northeast-2.amazonaws.com/](http://instagram-sparta.s3-website.ap-northeast-2.amazonaws.com/)
 
 시연 영상 :  [https://www.youtube.com/watch?v=p8W-KzFsETk&t=3s](https://www.youtube.com/watch?v=p8W-KzFsETk&t=3s)
@@ -100,7 +118,7 @@ FE
     - 내용 전달받으면 페이지에 뿌려주기
 ---
 
-# 8. 주간 할일
+# 10. 주간 할일
 
 |  | 3월 3(금) | 3월 4(토) | 3월 5일 (일) | 3월 6일(월) | 3월 7일(화) | 3월 8일(수) | 3월 9월(목) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
