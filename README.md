@@ -6,7 +6,7 @@
 | --- | --- | --- | --- |
 | 김명주 | FE |  | https://github.com/oterte |
 | 이인영 | FE |  | https://github.com/yeooong-dev |
-| 박성민 | BE | 로그인, 회원가입, 팔로우 | https://github.com/seongminnnn |
+| 박성민 | BE | 로그인, 회원가입, 팔로우, 페이지네이션 | https://github.com/seongminnnn |
 | 한승현 | BE | 댓글, 대댓글, 채팅 | https://github.com/gkstmdgus |
 | 박현아 | BE | 게시글, 해시태그 | https://github.com/aihtnyc-h |
 
