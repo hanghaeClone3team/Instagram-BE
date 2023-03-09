@@ -1,7 +1,6 @@
 package instagram.instagrambe.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import instagram.instagrambe.config.ExceptionHandlerFilter;
 import instagram.instagrambe.jwt.JwtAuthFilter;
 import instagram.instagrambe.jwt.JwtUtil;
 import instagram.instagrambe.user.repository.UserRepository;
@@ -104,7 +103,7 @@ public class WebSecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // 사전에 약속된 출처를 명시
-        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("http://instagram-sparta.s3-website.ap-northeast-2.amazonaws.com/");
         //config.addAllowedOrigin("http://charleybucket.s3-website.ap-northeast-2.amazonaws.com");
 
         // 특정 헤더를 클라이언트 측에서 사용할 수 있게 지정
